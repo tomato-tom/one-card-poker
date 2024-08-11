@@ -37,7 +37,7 @@ gcc -o poker poker.c
 
 ### 参考資料
 
-CMU School of Computer Science
-One-card poker
+CMU School of Computer Science<br>
+One-card poker<br>
 http://www.cs.cmu.edu/~ggordon/poker/
 
