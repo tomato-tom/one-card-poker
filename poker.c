@@ -281,7 +281,6 @@ void update_pot(GameState *state, Player player, Action action) {
 }
 
 Player showdown(GameState *state) {
-
     if (state->player_card > state->computer_card) {
         return PLAYER;
     } else if (state->player_card < state->computer_card) {
