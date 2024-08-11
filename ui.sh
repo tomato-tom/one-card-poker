@@ -10,15 +10,18 @@ player_bet=1
 message="place your bet"
 
 echo
-echo " ♠One♣Card♡Poker♢"
+echo "    ♠One♣Card♡Poker♢"
 echo
-echo "    Dealer ($dealer_money)"
-echo "     [**]   $dealer_bet"
+echo "       Dealer ($dealer_money)"
+echo "        [**]   $dealer_bet"
 echo
-echo "       $pot"
 echo
-echo "     [A♠]   $player_bet"
-echo "    Player ($player_money)"
+echo "        pot ($pot)"
 echo
-echo "  $message"
+echo
+echo "        [A♠]   $player_bet"
+echo "       Player ($player_money)"
+echo
+echo "     $message"
+echo
 
