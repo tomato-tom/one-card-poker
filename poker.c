@@ -9,21 +9,21 @@
 #define ANTE 1
 #define MIN_BET_CARD 8
 #define MIN_CALL_CARD 6
+#define CLEAR printf("\e[H\e[2J")
 
 const char *deck[DECK_SIZE] = {"2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"};
 const char *suits[4] = {"♠", "♣", "♢", "♡"};
 
 typedef enum {
-    PASS = 0,
-    BET = 1,
-    CALL = 2,
     FOLD = -1
+    PASS = 0,  // check
+    CALL = 1,
+    BET  = 2,
 } Action;
 
 typedef enum {
     PLAYER = 1,
     COMPUTER = 2,
-    DRAW = 0
 } Player;
 
 // ゲームの状態を表す構造体
@@ -31,11 +31,11 @@ typedef struct {
     int suit;
     int player_card;
     int computer_card;
-    int pot;
     int player_bet;
     int computer_bet;
     int player_money;
     int computer_money;
+    int pot;
 } GameState;
 
 void display_ui(GameState *state, const char *message, int winner);
@@ -43,7 +43,7 @@ void initialize_game(GameState *state);
 Action get_player_action(GameState *state, Action computer_action, int winner);
 Action get_computer_action(GameState *state, Action player_action, int winner);
 void update_pot(GameState *state, Player player, Action action);
-Player determine_winner(GameState *state);
+Player showdown(GameState *state);
 void play_round(GameState *state);
 
 
@@ -61,7 +61,7 @@ int main() {
         printf("次のラウンドを始めますか？ (y/n): ");
         char choice;
         scanf(" %c", &choice);
-        if (choice != 'y' && choice != 'Y') break;
+        if (choice == 'n' || choice == 'N') break;
     }
 
     printf("ゲーム終了\n");
@@ -92,12 +92,20 @@ void display_ui(GameState *state, const char *message, int winner) {
     }
 
     system("clear");
-    printf("\n  One Card Poker ♠ ♣ ♡ ♢\n\n");
+    CLEAR;
+    printf("\n");
+    printf("  One Card Poker ♠ ♣ ♡ ♢\n");
+    printf("\n");
     printf("    Dealer ($%d)\n", state->computer_money);
-    printf("     [%s]   $%d\n\n\n", computerCard, state->computer_bet);
-    printf("       ($%d)\n\n\n", state->pot);
+    printf("     [%s]   $%d\n", computerCard, state->computer_bet);
+    printf("\n");
+    printf("\n");
+    printf("     pot ($%d)\n", state->pot);
+    printf("\n");
+    printf("\n");
     printf("     [%s]   $%d\n", playerCard, state->player_bet);
-    printf("    Player ($%d)\n\n", state->player_money);
+    printf("    Player ($%d)\n", state->player_money);
+    printf("\n");
     printf("%s\n", message);
 }
 
@@ -137,7 +145,7 @@ void play_round(GameState *state) {
     }
 
     if (winner == 0) {
-        winner = determine_winner(state);
+        winner = showdown(state);
     }
 
     if (winner == PLAYER) {
@@ -242,7 +250,7 @@ void update_pot(GameState *state, Player player, Action action) {
     }
 }
 
-Player determine_winner(GameState *state) {
+Player showdown(GameState *state) {
     printf("コンピューターのカード: %s\n", deck[state->computer_card]);
 
     if (state->player_card > state->computer_card) {
@@ -250,5 +258,4 @@ Player determine_winner(GameState *state) {
     } else if (state->player_card < state->computer_card) {
         return COMPUTER;
     }
-    return DRAW;
 }
