@@ -14,10 +14,10 @@ gcc -o poker poker.c
 <br>
 遊び方:
 
-p: パス
-b: ベット
-c: コール
-f: フォールド
+p: パス<br>
+b: ベット<br>
+c: コール<br>
+f: フォールド<br>
 
 <br>
 
