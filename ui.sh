@@ -9,6 +9,8 @@ player_money=99
 player_bet=1
 message="place your bet"
 
+clear
+
 echo
 echo "    ♠One♣Card♡Poker♢"
 echo
